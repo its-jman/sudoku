@@ -48,7 +48,7 @@ const Home = observer(() => {
         </S.BoardActions>
         <Board game={game} />
         <div style={{ marginTop: 24 }}>
-          Re-implementation using recoil here:{" "}
+          Re-implementation using Recoil.js here:{" "}
           <a href="https://sudoku-recoil.jman.me">sudoku-recoil.jman.me</a>. It only has a the
           `naked single` rule implemented, which means that it will only solve extremely basic
           puzzles. The implementation in Recoil.js is much less performant than the
