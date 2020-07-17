@@ -47,6 +47,12 @@ const Home = observer(() => {
           <S.Button onClick={() => game.copyToClipboard()}>Copy board</S.Button>
         </S.BoardActions>
         <Board game={game} />
+        <div style={{ marginTop: 24 }}>
+          Re-implementation using recoil here:{" "}
+          <a href="https://sudoku-recoil.jman.me">sudoku-recoil.jman.me</a>. It only has a the
+          `naked single` rule implemented, so it will only solve basic puzzles. It is also much
+          laggier than the MobX implementation.
+        </div>
       </S.BoardWrapper>
     </S.Wrapper>
   );

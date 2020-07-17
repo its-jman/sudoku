@@ -195,6 +195,7 @@ ul {
 }
 
 a {
+  color: var(--blue-5);
   text-decoration: none;
 }
 
