@@ -51,7 +51,7 @@ const Home = observer(() => {
           Re-implementation using recoil here:{" "}
           <a href="https://sudoku-recoil.jman.me">sudoku-recoil.jman.me</a>. It only has a the
           `naked single` rule implemented, which means that it will only solve extremely basic
-          puzzles. The implementation in Recoil.js is significantly less performant than the
+          puzzles. The implementation in Recoil.js is much less performant than the
           implementation in MobX (this version).
         </div>
       </S.BoardWrapper>

@@ -41,7 +41,6 @@ export const BoardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 900px;
 `;
 
 export const BoardActions = styled.div`
