@@ -50,8 +50,8 @@ const Home = observer(() => {
         <div style={{ marginTop: 24 }}>
           Re-implementation using recoil here:{" "}
           <a href="https://sudoku-recoil.jman.me">sudoku-recoil.jman.me</a>. It only has a the
-          `naked single` rule implemented, so it will only solve basic puzzles. It is also much
-          laggier than the MobX implementation.
+          `naked single` rule implemented, so it will only solve basic puzzles. It has a much
+          slower interaction than the MobX implementation.
         </div>
       </S.BoardWrapper>
     </S.Wrapper>
