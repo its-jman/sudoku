@@ -59,25 +59,7 @@ const Board = observer<BoardProps>(({ game }) => {
         </S.CellSquare>
       ))}
       {game.cells.map((cell, i) => (
-        <React.Fragment key={`invisGroup_${i}`}>
-          {cell.colNumber % game.size === 0 ? (
-            <S.CellSquare key={`row_${cell.rowName}`} isRowLabel>
-              {cell.rowName}
-            </S.CellSquare>
-          ) : undefined}
-
-          <S.CellSquare key={`cell_${i}`}>
-            <S.StyledGameCell game={game} cell={cell} isFocused={false}>
-              {cell.value !== undefined
-                ? cell.value
-                : game.isEmptyGame
-                ? undefined
-                : cell.availableNumbers.map((a) => (
-                    <AvailableNumber key={a}>{a}</AvailableNumber>
-                  ))}
-            </S.StyledGameCell>
-          </S.CellSquare>
-        </React.Fragment>
+        <S.GameCell key={i} game={game} cell={cell} isFocused={false} />
       ))}
     </S.Board>
   );

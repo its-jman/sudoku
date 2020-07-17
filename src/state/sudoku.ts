@@ -11,11 +11,32 @@ export enum ValueSource {
   UserEntry,
 }
 
+export type ICell = Readonly<{
+  index: number;
+  value: number | undefined;
+  source: ValueSource | undefined;
+  isValid: boolean;
+  colNumber: number;
+  colName: string;
+  rowNumber: number;
+  rowName: string;
+}>;
+
+export type IGame = Readonly<{
+  size: number;
+  squareSize: number;
+  isSolved: boolean;
+  isValid: boolean;
+  isPossible: boolean;
+  isValidGame: boolean;
+  isEmptyGame: boolean;
+}>;
+
 export class Cell {
   @observable private readonly _game: Game;
   @observable private __value: number | undefined;
   @observable readonly index: number;
-  @observable source?: ValueSource;
+  @observable source: ValueSource | undefined;
   @observable groups: Group[] = [];
   @observable notPossibleValues: Set<number> = new Set();
 
@@ -27,43 +48,6 @@ export class Cell {
 
   @computed get value() {
     return this.__value;
-  }
-
-  @action setValue(v: number | undefined, source: ValueSource) {
-    if (this.source === ValueSource.InitialGame) {
-      throw new Error("Can not set value of static cell.");
-    } else {
-      if (v === 0 || v === undefined) {
-        this.__value = undefined;
-        this.source = undefined;
-      } else {
-        this.__value = v;
-        this.source = source;
-      }
-    }
-  }
-
-  @action addGroup(group: Group) {
-    this.groups.push(group);
-  }
-
-  @action addNotPossibleNumbers(...nums: number[]): boolean {
-    if (this.value !== undefined) return false;
-    let modified = false;
-    for (const n of nums) {
-      if (!this.notPossibleValues.has(n) && this.availableNumbers.includes(n)) {
-        this.notPossibleValues.add(n);
-        modified = true;
-      }
-    }
-    return modified;
-  }
-
-  @action reset() {
-    if (this.source !== ValueSource.InitialGame) {
-      this.setValue(undefined, ValueSource.ComputerSolved);
-      this.notPossibleValues.clear();
-    }
   }
 
   /*
@@ -102,6 +86,56 @@ export class Cell {
 
   @computed get colName() {
     return `${this.colNumber + 1}`;
+  }
+
+  @computed get readonlyCell(): ICell {
+    return {
+      index: this.index,
+      value: this.value,
+      source: this.source,
+      isValid: this.isValid,
+      colNumber: this.colNumber,
+      colName: this.colName,
+      rowNumber: this.rowNumber,
+      rowName: this.rowName,
+    };
+  }
+
+  @action setValue(v: number | undefined, source: ValueSource) {
+    if (this.source === ValueSource.InitialGame) {
+      throw new Error("Can not set value of static cell.");
+    } else {
+      if (v === 0 || v === undefined) {
+        this.__value = undefined;
+        this.source = undefined;
+      } else {
+        this.__value = v;
+        this.source = source;
+      }
+    }
+  }
+
+  @action addGroup(group: Group) {
+    this.groups.push(group);
+  }
+
+  @action addNotPossibleNumbers(...nums: number[]): boolean {
+    if (this.value !== undefined) return false;
+    let modified = false;
+    for (const n of nums) {
+      if (!this.notPossibleValues.has(n) && this.availableNumbers.includes(n)) {
+        this.notPossibleValues.add(n);
+        modified = true;
+      }
+    }
+    return modified;
+  }
+
+  @action reset() {
+    if (this.source !== ValueSource.InitialGame) {
+      this.setValue(undefined, ValueSource.ComputerSolved);
+      this.notPossibleValues.clear();
+    }
   }
 }
 
@@ -236,6 +270,18 @@ export class Game {
 
   @computed get isEmptyGame() {
     return this.cells.filter((c) => c.value !== undefined).length === 0;
+  }
+
+  @computed get readonlyGame(): IGame {
+    return {
+      size: this.size,
+      squareSize: this.squareSize,
+      isValid: this.isValid,
+      isValidGame: this.isValidGame,
+      isEmptyGame: this.isEmptyGame,
+      isPossible: this.isPossible,
+      isSolved: this.isSolved,
+    };
   }
 
   @action solvedSquare(): boolean {

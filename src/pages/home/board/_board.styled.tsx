@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import tailwindConfig, { tailwindTheme } from "src/styles/tailwind";
-import { Cell as CellObj, Game, ValueSource } from "src/state/sudoku";
+import { Game as GameObj, Cell as CellObj, ICell, IGame, ValueSource } from "src/state/sudoku";
 import { observer } from "mobx-react-lite";
 
-const getBorderColor = ({ game }: { game: Game }) =>
+const getBorderColor = ({ game }: { game: IGame }) =>
   game.isSolved
     ? tailwindTheme.colors.green["600"]
     : !game.isValid
@@ -12,7 +12,7 @@ const getBorderColor = ({ game }: { game: Game }) =>
     : tailwindTheme.colors.gray["900"];
 
 type BoardProps = {
-  game: Game;
+  game: IGame;
 };
 
 export const Board = styled.div<BoardProps>`
@@ -36,13 +36,13 @@ export const CellSquare = styled.div<CellSquareProps>`
   line-height: 1;
 `;
 
-type GameCellProps = {
-  game: Game;
-  cell: CellObj;
+type StyledGameCellProps = {
+  game: IGame;
+  cell: ICell;
   isFocused: boolean;
 };
 
-export const StyledGameCell = styled.div<GameCellProps>`
+export const StyledGameCell = styled.div<StyledGameCellProps>`
   padding: 2px;
   width: 100%;
   height: 100%;
@@ -112,3 +112,29 @@ export const AvailableNumber = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+type GameCellProps = {
+  game: GameObj;
+  cell: CellObj;
+  isFocused: boolean;
+};
+
+export const GameCell = observer<GameCellProps>(({ game, cell }) => {
+  return (
+    <React.Fragment key={`invisGroup_${cell.index}`}>
+      {cell.colNumber % game.size === 0 ? (
+        <CellSquare isRowLabel>{cell.rowName}</CellSquare>
+      ) : undefined}
+
+      <CellSquare>
+        <StyledGameCell game={game.readonlyGame} cell={cell.readonlyCell} isFocused={false}>
+          {cell.value !== undefined
+            ? cell.value
+            : game.isEmptyGame
+            ? undefined
+            : cell.availableNumbers.map((a) => <AvailableNumber key={a}>{a}</AvailableNumber>)}
+        </StyledGameCell>
+      </CellSquare>
+    </React.Fragment>
+  );
+});
