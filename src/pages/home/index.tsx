@@ -47,7 +47,7 @@ const Home = observer(() => {
           <S.Button onClick={() => game.copyToClipboard()}>Copy board</S.Button>
         </S.BoardActions>
         <Board game={game} />
-        <div style={{ marginTop: 24 }}>
+        <div style={{ marginTop: 24, maxWidth: 900 }}>
           Re-implementation using Recoil.js here:{" "}
           <a href="https://sudoku-recoil.jman.me">sudoku-recoil.jman.me</a>. It only has a the
           `naked single` rule implemented, which means that it will only solve extremely basic
