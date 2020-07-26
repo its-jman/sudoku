@@ -493,7 +493,9 @@ export class Game {
     if (this.cells.filter((c) =>
       c.value !== undefined && c.source !== GameMethod.InitialGame
     ).length > 0) {
-      alert(COPY_BOARD_WITH_VALUES_WARNING);
+      setTimeout(() => {
+        alert(COPY_BOARD_WITH_VALUES_WARNING);
+      }, 25);
     }
     copy(this.toString());
   }
