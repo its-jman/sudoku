@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background-color: var(--grey-1);
-  color: var(--grey-9);
-
   display: flex;
   min-height: 100vh;
   padding: 0.25em 80px 0.25em 0;
@@ -41,6 +38,7 @@ export const BoardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 750px;
 `;
 
 export const BoardActions = styled.div`

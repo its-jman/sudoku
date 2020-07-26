@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tailwindConfig, { tailwindTheme } from "src/styles/tailwind";
-import { Game as GameObj, Cell as CellObj, ICell, IGame, ValueSource } from "src/state/sudoku";
-import { observer } from "mobx-react-lite";
+import { GameMethod, ICell, IGame } from "src/utils/sudoku/types";
 
 const getBorderColor = ({ game }: { game: IGame }) =>
   game.isSolved
@@ -65,7 +64,7 @@ export const StyledGameCell = styled.div<StyledGameCellProps>`
 
   color: ${({ cell }) => {
     if (!cell.isValid) return tailwindConfig.theme.colors.red[700];
-    else if (cell.source === ValueSource.InitialGame)
+    else if (cell.source === GameMethod.InitialGame)
       return tailwindConfig.theme.colors.gray[500];
     return;
   }};
@@ -112,29 +111,3 @@ export const AvailableNumber = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-type GameCellProps = {
-  game: GameObj;
-  cell: CellObj;
-  isFocused: boolean;
-};
-
-export const GameCell = observer<GameCellProps>(({ game, cell }) => {
-  return (
-    <React.Fragment key={`invisGroup_${cell.index}`}>
-      {cell.colNumber % game.size === 0 ? (
-        <CellSquare isRowLabel>{cell.rowName}</CellSquare>
-      ) : undefined}
-
-      <CellSquare>
-        <StyledGameCell game={game.readonlyGame} cell={cell.readonlyCell} isFocused={false}>
-          {cell.value !== undefined
-            ? cell.value
-            : game.isEmptyGame
-            ? undefined
-            : cell.availableNumbers.map((a) => <AvailableNumber key={a}>{a}</AvailableNumber>)}
-        </StyledGameCell>
-      </CellSquare>
-    </React.Fragment>
-  );
-});

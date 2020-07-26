@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-helmet": "^6.0.0",
     "@types/styled-components": "^5.1.0",
+    "@types/uuid": "^8.0.0",
     "chokidar-cli": "^2.1.0",
     "copy-to-clipboard": "^3.3.1",
     "lodash.clonedeep": "^4.5.0",
@@ -27,7 +28,8 @@
     "styled-components": "^5.1.1",
     "tailwindcss": "^1.4.6",
     "twin.macro": "^1.5.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.output.css",
@@ -59,7 +61,7 @@
     ]
   },
   "prettier": {
-    "printWidth": 95
+    "printWidth": 85
   },
   "devDependencies": {
     "prettier": "^2.0.5"
