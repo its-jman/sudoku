@@ -493,6 +493,7 @@ export class Game {
     if (this.cells.filter((c) =>
       c.value !== undefined && c.source !== GameMethod.InitialGame
     ).length > 0) {
+      // `alert(...)` will block `copy(...)` access to clipboard.
       setTimeout(() => {
         alert(COPY_BOARD_WITH_VALUES_WARNING);
       }, 25);

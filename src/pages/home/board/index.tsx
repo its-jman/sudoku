@@ -6,7 +6,8 @@ import {
   Board as PresentationalBoard,
 } from "src/pages/home/board/presentational";
 
-const Board = observer<BoardProps>(({ game }) => {
+const Board = observer<BoardProps>((props) => {
+  const { game } = props;
   const boardRef = useRef<HTMLDivElement>(null);
   const [x, setX] = useState(-1);
   const [y, setY] = useState(-1);
@@ -47,7 +48,7 @@ const Board = observer<BoardProps>(({ game }) => {
     { targetKey: "ArrowDown", handler: downHandler },
   ]);
 
-  return <PresentationalBoard game={game} />;
+  return <PresentationalBoard {...props} />;
 });
 
 export default Board;

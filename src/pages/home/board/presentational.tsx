@@ -11,6 +11,7 @@ type GameCellProps = {
 
 export type BoardProps = {
   game: Game;
+  className?: string;
 };
 
 const GameCell = observer<GameCellProps>(({ game, cell }) => {
@@ -40,17 +41,19 @@ const GameCell = observer<GameCellProps>(({ game, cell }) => {
 });
 
 export const Board = React.forwardRef<HTMLDivElement, BoardProps>(
-  ({ game }, ref) => (
-    <S.Board ref={ref} game={game}>
-      <S.CellSquare />
-      {game.cells.slice(0, game.size).map((c) => (
-        <S.CellSquare key={`column_${c.colName}`} isColLabel>
-          {c.colName}
-        </S.CellSquare>
-      ))}
-      {game.cells.map((cell, i) => (
-        <GameCell key={i} game={game} cell={cell} isFocused={false} />
-      ))}
-    </S.Board>
+  ({ game, className }, ref) => (
+    <div className={className}>
+      <S.Board ref={ref} game={game}>
+        <S.CellSquare />
+        {game.cells.slice(0, game.size).map((c) => (
+          <S.CellSquare key={`column_${c.colName}`} isColLabel>
+            {c.colName}
+          </S.CellSquare>
+        ))}
+        {game.cells.map((cell, i) => (
+          <GameCell key={i} game={game} cell={cell} isFocused={false} />
+        ))}
+      </S.Board>
+    </div>
   )
 );

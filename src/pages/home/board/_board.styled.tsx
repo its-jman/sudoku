@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import tailwindConfig, { tailwindTheme } from "src/styles/tailwind";
 import { GameMethod, ICell, IGame } from "src/utils/sudoku/types";
@@ -16,8 +16,8 @@ type BoardProps = {
 
 export const Board = styled.div<BoardProps>`
   display: grid;
-  grid-template-rows: repeat(${({ game }) => game.size + 1}, 1fr);
-  grid-template-columns: repeat(${({ game }) => game.size + 1}, 1fr);
+  grid-template-rows: 35px repeat(${({ game }) => game.size}, minmax(0, 1fr));
+  grid-template-columns: 35px repeat(${({ game }) => game.size}, minmax(0, 1fr));
 `;
 
 type CellSquareProps = {
@@ -25,15 +25,31 @@ type CellSquareProps = {
   isRowLabel?: boolean;
 };
 
-export const CellSquare = styled.div<CellSquareProps>`
-  width: 75px;
-  height: 75px;
-  display: flex;
-  align-items: ${({ isColLabel }) => (isColLabel ? "flex-end" : "center")};
-  justify-content: ${({ isRowLabel }) => (isRowLabel ? "flex-end" : "center")};
-  padding: ${({ isColLabel, isRowLabel }) => (isColLabel || isRowLabel) && "8px"};
-  line-height: 1;
+const StyledCellSquare = styled.div<CellSquareProps>`
+  position: relative;
+  padding-bottom: ${({ isColLabel, isRowLabel }) =>
+    !(isColLabel || isRowLabel) && "100%"};
+
+  & > .inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: ${({ isColLabel }) => (isColLabel ? "flex-end" : "center")};
+    justify-content: ${({ isRowLabel }) => (isRowLabel ? "flex-end" : "center")};
+    padding: ${({ isColLabel, isRowLabel }) => (isColLabel || isRowLabel) && "8px"};
+    line-height: 1;
+  }
 `;
+
+export const CellSquare: FC<CellSquareProps> = ({ children, ...props }) => (
+  <StyledCellSquare {...props}>
+    <div className="inner">{children}</div>
+  </StyledCellSquare>
+);
 
 type StyledGameCellProps = {
   game: IGame;
