@@ -30,7 +30,7 @@ const StyledCellSquare = styled.div<CellSquareProps>`
   padding-bottom: ${({ isColLabel, isRowLabel }) =>
     !(isColLabel || isRowLabel) && "100%"};
 
-  & > .inner {
+  & > .i {
     position: absolute;
     left: 0;
     top: 0;
@@ -47,7 +47,7 @@ const StyledCellSquare = styled.div<CellSquareProps>`
 
 export const CellSquare: FC<CellSquareProps> = ({ children, ...props }) => (
   <StyledCellSquare {...props}>
-    <div className="inner">{children}</div>
+    <div className="i">{children}</div>
   </StyledCellSquare>
 );
 

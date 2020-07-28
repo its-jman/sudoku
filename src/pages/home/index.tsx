@@ -3,13 +3,14 @@ import React, { useContext } from "react";
 import { GameContext } from "src/state/sudoku";
 import { observer } from "mobx-react-lite";
 import Board from "./board";
+import { gcn } from "src/utils";
 
 const Home = observer(() => {
   const gameManager = useContext(GameContext);
   const game = gameManager.currentGame;
 
   return (
-    <div className="flex h-full py-1 pr-20" style={{ width: 1350 }}>
+    <div className="flex h-full py-1 pr-24" style={{ width: 1350 }}>
       <div className="w-56 p-3 flex flex-col items-start flex-shrink-0">
         <button
           className="btn-primary mb-2"
@@ -23,25 +24,18 @@ const Home = observer(() => {
         >
           Import Board
         </button>
-        <button className="btn-primary mb-2" onClick={game.copyToClipboard}>
+        <button className="btn-primary mb-2" onClick={() => game.copyToClipboard()}>
           Copy board
         </button>
-        <div className="rounded-lg border-2 border-grey-400">
+        <div className="rounded-lg border-2 border-grey-400 w-full">
           <h3 className="p-3">Sample Games</h3>
           <hr />
           <div className="p-3">
             {gameManager.knownGames.map((board, i) => (
               <div key={i}>
                 <a
+                  className={gcn(board.name === game.name && "underline font-bold")}
                   onClick={() => gameManager.startGame(board.name, board.val)}
-                  style={
-                    board.name === game.name
-                      ? {
-                          textDecoration: "underline",
-                          fontWeight: "bold",
-                        }
-                      : undefined
-                  }
                 >
                   {board.name}
                 </a>
@@ -52,16 +46,16 @@ const Home = observer(() => {
       </div>
       <div className="flex flex-col">
         <div className="flex justify-start items-start ml-19">
-          <button className="btn-primary ml-8" onClick={game.resetToStart}>
+          <button className="btn-primary ml-8" onClick={() => game.resetToStart()}>
             Reset to start
           </button>
-          <button className="btn-primary ml-2" onClick={game.solveGame}>
+          <button className="btn-primary ml-2" onClick={() => game.solveGame()}>
             Solve game
           </button>
-          <button className="btn-primary ml-2" onClick={game.stepSolveGame}>
+          <button className="btn-primary ml-2" onClick={() => game.stepSolveGame()}>
             Get hint
           </button>
-          <button className="btn-primary ml-2" onClick={game.checkSolutions}>
+          <button className="btn-primary ml-2" onClick={() => game.checkSolutions()}>
             Check Solutions
           </button>
         </div>

@@ -31,6 +31,9 @@
     "typescript": "^3.9.7",
     "uuid": "^8.2.0"
   },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  },
   "scripts": {
     "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.output.css",
     "watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/styles/tailwind.output.css -c 'npm run build:tailwind'",
@@ -62,8 +65,5 @@
   },
   "prettier": {
     "printWidth": 85
-  },
-  "devDependencies": {
-    "prettier": "^2.0.5"
   }
 }
